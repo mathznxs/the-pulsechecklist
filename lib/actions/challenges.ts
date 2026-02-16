@@ -40,6 +40,15 @@ export async function createChallenge(
 ): Promise<{ error?: string }> {
   const supabase = await createClient()
   const lojaId = await getCurrentLojaId()
+
+  // Deactivate any existing active challenges for this store
+  let deactivateQuery = supabase
+    .from("challenges")
+    .update({ ativa: false })
+    .eq("ativa", true)
+  if (lojaId) deactivateQuery = deactivateQuery.eq("loja_id", lojaId)
+  await deactivateQuery
+
   const dataInicio = (formData.get("data_inicio") as string) || null
   const dataFim = (formData.get("data_fim") as string) || null
   const descricao = (formData.get("descricao") as string) || null
@@ -48,6 +57,7 @@ export async function createChallenge(
     data_inicio: dataInicio,
     data_fim: dataFim,
     descricao: descricao,
+    ativa: true,
     loja_id: lojaId,
   })
   if (error) return { error: error.message }
@@ -135,6 +145,20 @@ export async function setScore(
     },
     { onConflict: "challenge_id,user_id" }
   )
+  if (error) return { error: error.message }
+  revalidatePath("/gincanas")
+  return {}
+}
+
+export async function endChallenge(
+  challengeId: string
+): Promise<{ error?: string }> {
+  const supabase = await createClient()
+  const today = new Date().toISOString().split("T")[0]
+  const { error } = await supabase
+    .from("challenges")
+    .update({ ativa: false, data_fim: today })
+    .eq("id", challengeId)
   if (error) return { error: error.message }
   revalidatePath("/gincanas")
   return {}
