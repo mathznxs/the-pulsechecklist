@@ -6,7 +6,10 @@ import { NextResponse } from "next/server"
 
 async function requireLideranca() {
   const session = await auth()
-  if (!session?.user?.profileId || session.user.cargo !== "gerente") {
+  if (
+    !session?.user?.profileId ||
+    (session.user.cargo !== "gerente" && session.user.cargo !== "supervisão")
+  ) {
     return null
   }
   return session.user

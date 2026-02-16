@@ -18,7 +18,7 @@ export default async function AdminPage() {
 
   if (!profile) redirect("/auth/login")
 
-  if (profile.cargo !== "gerente") redirect("/")
+  if (profile.cargo !== "gerente" && profile.cargo !== "supervisão") redirect("/")
 
   return (
     <div className="min-h-screen bg-background">

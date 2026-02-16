@@ -22,9 +22,9 @@ const eventTypeConfig: Record<
 > = {
   evento: { label: "Evento", dotClass: "bg-blue-500", bgClass: "bg-blue-50 text-blue-700" },
   visita: { label: "Visita", dotClass: "bg-amber-500", bgClass: "bg-amber-50 text-amber-700" },
-  lancamento: { label: "Lancamento", dotClass: "bg-emerald-500", bgClass: "bg-emerald-50 text-emerald-700" },
+  lancamento: { label: "Lançamento", dotClass: "bg-emerald-500", bgClass: "bg-emerald-50 text-emerald-700" },
   folga: { label: "Folga", dotClass: "bg-muted-foreground", bgClass: "bg-muted text-muted-foreground" },
-  critico: { label: "Data Critica", dotClass: "bg-red-500", bgClass: "bg-red-50 text-red-700" },
+  critico: { label: "Dia de Pico", dotClass: "bg-red-500", bgClass: "bg-red-50 text-red-700" },
 }
 
 const DAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]

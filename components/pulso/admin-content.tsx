@@ -46,6 +46,7 @@ import {
 
 const cargoConfig: Record<string, { label: string; bgClass: string }> = {
   assistente: { label: "Assistente", bgClass: "bg-blue-50 text-blue-700" },
+  supervisão: { label: "Supervisão", bgClass: "bg-purple-50 text-purple-700" },
   gerente: { label: "Gerente", bgClass: "bg-emerald-50 text-emerald-700" },
 };
 
@@ -340,8 +341,8 @@ export function AdminContent({
                       className="flex h-10 w-full rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background"
                     >
                       <option value="assistente">Assistente</option>
+                      <option value="supervisão">Supervisão</option>
                       <option value="gerente">Gerente</option>
-                      <option value="gerente">Supervisão</option>
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -393,17 +394,10 @@ export function AdminContent({
                           {user.nome ?? "-"}
                         </p>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                            user.ativo
-                              ? "bg-emerald-50 text-emerald-700"
-                              : "bg-muted text-muted-foreground"
-                          }`}
-                        >
-                          <span
-                            className={`h-1.5 w-1.5 rounded-full ${user.cargo ? "bg-emerald-500" : "bg-muted-foreground"}`}
-                          />
-                          {user.ativo ? "Ativo" : "Inativo"}
-                        </span>
+                            className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${cargo.bgClass}`}
+                          >
+                            {cargo.label}
+                          </span>
                       </div>
                     </div>
                     <div className="flex shrink-0 items-center gap-0.5">
@@ -597,6 +591,7 @@ export function AdminContent({
                       className="flex h-10 w-full rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background"
                     >
                       <option value="assistente">Assistente</option>
+                      <option value="supervisão">Supervisão</option>
                       <option value="gerente">Gerente</option>
                     </select>
                   </div>

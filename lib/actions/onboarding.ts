@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache"
 export async function completeOnboarding(formData: {
   matricula: string
   nome: string
-  cargo: "assistente" | "gerente"
+  cargo: "assistente" | "supervisão" | "gerente"
   setor_base: string | null
   loja_numero: string
 }) {

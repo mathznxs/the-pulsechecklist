@@ -30,7 +30,9 @@ const SETORES = [
 export default function OnboardingPage() {
   const [matricula, setMatricula] = useState("")
   const [nome, setNome] = useState("")
-  const [cargo, setCargo] = useState<"assistente" | "gerente">("assistente")
+  const [cargo, setCargo] = useState<"assistente" | "supervisão" | "gerente">(
+    "assistente"
+  )
   const [setorBase, setSetorBase] = useState<string>("")
   const [lojaNumero, setLojaNumero] = useState("")
   const [lojas, setLojas] = useState<
@@ -157,15 +159,13 @@ export default function OnboardingPage() {
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="cargo">Cargo</Label>
-            <Select
-              value={cargo}
-              onValueChange={(v) => setCargo(v as "assistente" | "gerente")}
-            >
+            <Select value={cargo} onValueChange={(v) => setCargo(v as typeof cargo)}>
               <SelectTrigger id="cargo">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="assistente">Assistente</SelectItem>
+                <SelectItem value="supervisão">Supervisão</SelectItem>
                 <SelectItem value="gerente">Gerente</SelectItem>
               </SelectContent>
             </Select>

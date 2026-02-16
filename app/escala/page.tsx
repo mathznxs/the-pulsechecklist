@@ -11,7 +11,8 @@ export default async function EscalaPage() {
   const profile = await getProfileForSession()
   if (!profile) redirect("/auth/login")
 
-  const isLideranca = profile.cargo === "gerente"
+  const isLideranca =
+    profile.cargo === "gerente" || profile.cargo === "supervisão"
 
   const [todaySchedule, weekSchedule, shifts, allSchedules, profiles, fixedSchedules] = await Promise.all([
     getUserTodaySchedule(profile.id),

@@ -13,7 +13,8 @@ export default async function CalendarioPage() {
   const now = new Date()
   const events = await getCalendarEvents(now.getMonth() + 1, now.getFullYear())
 
-  const isLideranca = profile?.cargo === "gerente"
+  const isLideranca =
+    profile?.cargo === "gerente" || profile?.cargo === "supervisão"
 
   return (
     <div className="min-h-screen bg-background">

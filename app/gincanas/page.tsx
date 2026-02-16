@@ -21,7 +21,8 @@ export default async function GincanasPage() {
     ? await getChallengeScores(activeChallenge.id)
     : []
 
-  const isLideranca = profile?.cargo === "gerente"
+  const isLideranca =
+    profile?.cargo === "gerente" || profile?.cargo === "supervisão"
 
   return (
     <div className="min-h-screen bg-background">

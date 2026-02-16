@@ -229,7 +229,7 @@ export function GincanasContent({ challenges, scores, profiles, isLideranca }: G
       {/* Podium */}
       {top3.length > 0 && (
         <div className="rounded-xl border border-border bg-card p-4 sm:p-6">
-          <h3 className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Podio</h3>
+          <h3 className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pódio</h3>
           <div className="mt-4 flex items-end justify-center gap-3 sm:mt-6 sm:gap-6">
             {top3[1] && <PodiumCard score={top3[1]} position={2} />}
             {top3[0] && <PodiumCard score={top3[0]} position={1} />}

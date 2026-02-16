@@ -1,4 +1,4 @@
-export type Cargo = "assistente" | "gerente"
+export type Cargo = "assistente" | "supervisão" | "gerente"
 
 export type TaskStatus =
   | "pendente"
