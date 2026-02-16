@@ -34,7 +34,7 @@ interface OnboardingFormProps {
 export function OnboardingForm({ lojas }: OnboardingFormProps) {
   const [matricula, setMatricula] = useState("")
   const [nome, setNome] = useState("")
-  const [cargo, setCargo] = useState<"assistente" | "supervisao" | "gerente">(
+  const [cargo, setCargo] = useState<"assistente" | "supervisão" | "gerente">(
     "assistente"
   )
   const [setorBase, setSetorBase] = useState<string>("")
