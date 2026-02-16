@@ -96,5 +96,5 @@ export async function getLojas() {
     .order("numero_loja")
 
   if (error) return []
-  return data
+  return data ?? []
 }
