@@ -95,6 +95,11 @@ export async function getLojas() {
     .eq("ativo", true)
     .order("numero_loja")
 
-  if (error) return []
+  if (error) {
+    console.error("[getLojas] Supabase error:", error.message, error.code)
+    return []
+  }
+
+  console.log("[getLojas] Returned", data?.length ?? 0, "lojas")
   return data ?? []
 }
