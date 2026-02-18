@@ -55,7 +55,7 @@ export async function completeOnboarding(formData: {
       .update({
         matricula: formData.matricula,
         nome: formData.nome,
-        cargo: formData.cargo,
+        cargo: "assistente",
         setor_base: formData.setor_base,
         loja_id: loja.id,
         onboarding_completo: true,
@@ -71,7 +71,7 @@ export async function completeOnboarding(formData: {
       microsoft_id: session.user.microsoftId,
       matricula: formData.matricula,
       nome: formData.nome,
-      cargo: formData.cargo,
+      cargo: "assistente",
       setor_base: formData.setor_base,
       loja_id: loja.id,
       onboarding_completo: true,

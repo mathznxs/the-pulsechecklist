@@ -69,7 +69,6 @@ export function OnboardingForm({ lojas }: OnboardingFormProps) {
     const result = await completeOnboarding({
       matricula: matricula.trim(),
       nome: nome.trim(),
-      cargo,
       setor_base: setorBase || null,
       loja_numero: lojaNumero,
     })
@@ -123,20 +122,6 @@ export function OnboardingForm({ lojas }: OnboardingFormProps) {
                 {l.nome} ({l.numero_loja})
               </SelectItem>
             ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="cargo">Cargo</Label>
-        <Select value={cargo} onValueChange={(v) => setCargo(v as typeof cargo)}>
-          <SelectTrigger id="cargo">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="assistente">Assistente</SelectItem>
-            <SelectItem value="supervisao">Supervisao</SelectItem>
-            <SelectItem value="gerente">Gerente</SelectItem>
           </SelectContent>
         </Select>
       </div>
