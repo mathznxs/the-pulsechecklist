@@ -55,7 +55,7 @@ export async function completeOnboarding(formData: {
       .update({
         matricula: formData.matricula,
         nome: formData.nome,
-        cargo: formData.cargo,
+        cargo: "assistente",
         setor_base: formData.setor_base,
         loja_id: loja.id,
         onboarding_completo: true,
@@ -71,7 +71,7 @@ export async function completeOnboarding(formData: {
       microsoft_id: session.user.microsoftId,
       matricula: formData.matricula,
       nome: formData.nome,
-      cargo: formData.cargo,
+      cargo: "assistente",
       setor_base: formData.setor_base,
       loja_id: loja.id,
       onboarding_completo: true,
@@ -95,6 +95,11 @@ export async function getLojas() {
     .eq("ativo", true)
     .order("numero_loja")
 
-  if (error) return []
+  if (error) {
+    console.error("[getLojas] Supabase error:", error.message, error.code)
+    return []
+  }
+
+  console.log("[getLojas] Returned", data?.length ?? 0, "lojas")
   return data ?? []
 }

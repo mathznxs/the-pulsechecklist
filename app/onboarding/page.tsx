@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getLojas } from "@/lib/actions/onboarding"
 import { OnboardingForm } from "@/components/pulso/onboarding-form"
 
