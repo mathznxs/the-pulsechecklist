@@ -28,13 +28,11 @@ export interface Loja {
 
 export interface Profile {
   id: string
-  microsoft_id: string | null
   matricula: string
   nome: string
   cargo: Cargo
   setor_base: string | null
   loja_id: string | null
-  onboarding_completo: boolean
   ativo: boolean
   criado_em: string
 }

@@ -2,15 +2,49 @@
 
 import { signIn } from "next-auth/react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { AlertCircle, Loader2 } from "lucide-react"
 
 export default function LoginPage() {
+  const [matricula, setMatricula] = useState("")
+  const [senha, setSenha] = useState("")
+  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
-  function handleSignIn() {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+
+    if (!matricula.trim() || !senha) {
+      setError("Informe matrícula e senha.")
+      return
+    }
+
     setLoading(true)
-    signIn("microsoft-entra-id", { callbackUrl: "/" })
+
+    const result = await signIn("credentials", {
+      matricula: matricula.trim(),
+      senha,
+      redirect: false,
+    })
+
+    if (result?.error === "AccountBlocked") {
+      router.push("/auth/blocked")
+      return
+    }
+
+    if (result?.error) {
+      setError("Matrícula ou senha inválidas.")
+      setLoading(false)
+      return
+    }
+
+    router.push("/")
+    router.refresh()
   }
 
   return (
@@ -38,37 +72,55 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <Button
-          onClick={handleSignIn}
-          disabled={loading}
-          className="w-full"
-          size="lg"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Redirecionando...
-            </>
-          ) : (
-            <>
-              <svg
-                className="mr-2 h-5 w-5"
-                viewBox="0 0 21 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect x="1" y="1" width="9" height="9" fill="currentColor" fillOpacity="0.8" />
-                <rect x="11" y="1" width="9" height="9" fill="currentColor" fillOpacity="0.6" />
-                <rect x="1" y="11" width="9" height="9" fill="currentColor" fillOpacity="0.6" />
-                <rect x="11" y="11" width="9" height="9" fill="currentColor" fillOpacity="0.4" />
-              </svg>
-              Entrar com Microsoft
-            </>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="matricula">Matrícula</Label>
+            <Input
+              id="matricula"
+              type="text"
+              inputMode="numeric"
+              placeholder="Ex: 10234"
+              value={matricula}
+              onChange={(e) => setMatricula(e.target.value.replace(/\D/g, ""))}
+              autoComplete="username"
+              required
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="senha">Senha</Label>
+            <Input
+              id="senha"
+              type="password"
+              placeholder="••••••••"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          {error && (
+            <div className="flex items-center gap-2 rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              {error}
+            </div>
           )}
-        </Button>
+
+          <Button type="submit" disabled={loading} className="w-full" size="lg">
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Entrando...
+              </>
+            ) : (
+              "Entrar"
+            )}
+          </Button>
+        </form>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          Centauro Pulso - Acesso restrito a colaboradores
+          Centauro Pulso · Acesso restrito a colaboradores cadastrados
         </p>
       </div>
     </div>

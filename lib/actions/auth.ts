@@ -2,24 +2,16 @@
 
 import { auth, signOut as nextAuthSignOut } from "@/lib/auth"
 import { createServiceClient } from "@/lib/supabase/service"
-import { redirect } from "next/navigation"
 import type { Profile } from "@/lib/types"
 
 export async function getCurrentUser(): Promise<{
-  user: { id: string; email: string } | null
+  user: { id: string; matricula: string } | null
   profile: Profile | null
 }> {
   const session = await auth()
-  if (!session?.user) return { user: null, profile: null }
+  if (!session?.user?.profileId) return { user: null, profile: null }
 
-  const { profileId } = session.user
-
-  if (!profileId) {
-    return {
-      user: { id: "", email: session.user.email ?? "" },
-      profile: null,
-    }
-  }
+  const { profileId, matricula } = session.user
 
   const supabase = createServiceClient()
   const { data: profile } = await supabase
@@ -29,7 +21,7 @@ export async function getCurrentUser(): Promise<{
     .single()
 
   return {
-    user: { id: profileId, email: session.user.email ?? "" },
+    user: { id: profileId, matricula },
     profile: profile as Profile | null,
   }
 }

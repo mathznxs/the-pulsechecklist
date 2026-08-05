@@ -96,8 +96,10 @@ export function AdminContent({
   const [showEditUser, setShowEditUser] = useState<Profile | null>(null);
   const [showCreateShift, setShowCreateShift] = useState(false);
   const [showCreateSchedule, setShowCreateSchedule] = useState(false);
-  const [showEditSchedule, setShowEditSchedule] = useState<FixedSchedule | null>(null);
-  const [scheduleToDelete, setScheduleToDelete] = useState<FixedSchedule | null>(null);
+  const [showEditSchedule, setShowEditSchedule] =
+    useState<FixedSchedule | null>(null);
+  const [scheduleToDelete, setScheduleToDelete] =
+    useState<FixedSchedule | null>(null);
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [formError, setFormError] = useState<string | null>(null);
@@ -132,6 +134,7 @@ export function AdminContent({
           nome: formData.get("nome"),
           cargo: formData.get("cargo"),
           setor_base: formData.get("setor_base") || null,
+          senha: formData.get("senha"),
         }),
       });
       const data = await res.json();
@@ -162,6 +165,7 @@ export function AdminContent({
           nome: formData.get("nome"),
           cargo: formData.get("cargo"),
           setor_base: formData.get("setor_base") || null,
+          senha: formData.get("senha"),
         }),
       });
       const data = await res.json();
@@ -360,6 +364,21 @@ export function AdminContent({
                       ))}
                     </select>
                   </div>
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="cu-senha">Senha Inicial</Label>
+                    <Input
+                      id="cu-senha"
+                      name="senha"
+                      type="password"
+                      required
+                      minLength={6}
+                      placeholder="Digite a senha inicial"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Esta será a senha utilizada pelo colaborador no primeiro
+                      acesso.
+                    </p>
+                  </div>
                   {formError && (
                     <p className="text-sm text-destructive">{formError}</p>
                   )}
@@ -394,10 +413,10 @@ export function AdminContent({
                           {user.nome ?? "-"}
                         </p>
                         <span
-                            className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${cargo.bgClass}`}
-                          >
-                            {cargo.label}
-                          </span>
+                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${cargo.bgClass}`}
+                        >
+                          {cargo.label}
+                        </span>
                       </div>
                     </div>
                     <div className="flex shrink-0 items-center gap-0.5">
@@ -611,6 +630,23 @@ export function AdminContent({
                       ))}
                     </select>
                   </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="eu-senha">Nova senha</Label>
+
+                    <Input
+                      id="eu-senha"
+                      name="senha"
+                      type="password"
+                      placeholder="Deixe em branco para manter a senha atual"
+                    />
+
+                    <p className="text-xs text-muted-foreground">
+                      Preencha somente se desejar redefinir a senha do
+                      colaborador.
+                    </p>
+                  </div>
+
                   {formError && (
                     <p className="text-sm text-destructive">{formError}</p>
                   )}
@@ -957,7 +993,9 @@ export function AdminContent({
                           <input
                             type="checkbox"
                             name={`dia_edit_${d.value}`}
-                            defaultChecked={showEditSchedule.dias_semana?.includes(d.value)}
+                            defaultChecked={showEditSchedule.dias_semana?.includes(
+                              d.value,
+                            )}
                             className="h-4 w-4 rounded border-input"
                           />
                           {d.label}
@@ -989,8 +1027,8 @@ export function AdminContent({
                 <>
                   <p className="text-sm text-muted-foreground">
                     Tem certeza que deseja excluir a escala fixa de{" "}
-                    <strong>{scheduleToDelete.profile?.nome ?? "N/A"}</strong>{" "}
-                    ({scheduleToDelete.setor}, {scheduleToDelete.shift?.nome})?
+                    <strong>{scheduleToDelete.profile?.nome ?? "N/A"}</strong> (
+                    {scheduleToDelete.setor}, {scheduleToDelete.shift?.nome})?
                     Esta ação não pode ser desfeita.
                   </p>
                   <div className="flex justify-end gap-2">
